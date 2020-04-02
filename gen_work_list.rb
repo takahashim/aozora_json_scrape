@@ -11,6 +11,10 @@
 require 'json'
 
 work = []
+
+person_headers = {name: "作家名", name_kana: "作家名読み", name_en: "ローマ字表記", born_on: "生年", died_on: "没年",  desc: "人物について"}
+site_headers = {site_name: "サイト名", site_url: "URL",  site_desc: "備考"}
+
 Dir.glob("index_pages/person*.html") do |d|
  begin
   d =~ /person(\d+)\.html/
@@ -28,6 +32,24 @@ Dir.glob("index_pages/person*.html") do |d|
         work[num] ||= {id: num, work: []}
         work[num][:work] ||= []
         work[num][:work] << {work_id: work_id, title: title}
+      elsif line =~ %r{<tr><td class="header">(.+?)：</td><td>(.+?)</td>}
+        header, body = $1, $2
+        if person_headers.values.include?(header)
+          key, _ = person_headers.rassoc(header)
+          if key == :name
+            body.gsub!(/<[^>]+>/,"")
+            body.gsub!(/　→.*$/,"")
+          end
+          work[num] ||= {id: num, work: []}
+          work[num][key] = body
+        elsif site_headers.values.include?(header)
+          key, _ = site_headers.rassoc(header)
+          if key == :site_name
+            body.gsub!(/<[^>]+>/,"")
+          end
+          work[num] ||= {id: num, work: []}
+          work[num][key] = body
+        end
       end
     end
   end

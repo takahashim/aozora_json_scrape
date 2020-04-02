@@ -6,9 +6,18 @@
     * alt_id: 別名の作家ID
     * alt_name: 別名の作家名
 
-* work.json (作品リスト)
+* work.json (作家情報と作品リスト)
     * id: 作家ID
-    * work_id: 作品ID
-    * title: 作品タイトル
+    * name: 作家名(姓 名)
+    * name_kana: 作家名読み
+    * name_en: 作家名ローマ字表記
+    * born_on: 生年月日
+    * died_on: 没年月日
+    * desc: 人物について
+    * site_name: 関連サイト名
+    * site_url: 関連サイトURL
+    * work: 作品
+        * work_id: 作品ID
+        * title: 作品タイトル
 
 作品の情報については青空文庫のCSVを利用してください。
