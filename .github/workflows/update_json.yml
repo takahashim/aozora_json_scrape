@@ -1,0 +1,38 @@
+name: Update JSON files
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+    - name: checkout aozorabuno.git
+      run: |
+        git clone --depth 1 https://github.com/aozorabunko/aozorabunko.git
+    - name: generate person.json
+      run: |
+        cd aozorabunko && ruby ../gen_person_list.rb > ../person.json
+    - name: generate person_detail.json
+      run: |
+        cd aozorabunko && ruby ../gen_person_detail_list.rb > ../person_detail.json
+    - name: git config && commit
+      run: |
+        git config --global user.email "takahashim@users.noreply.github.com"
+        git config --global user.name "github-actions-bot"
+        git add *.json
+        CURDATE=`date "+%Y%m%d"`
+        git commit -m "[ci skip] update JSON ${CURDATE}"
+    - name: push
+      run: |
+        git remote set-url origin https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git
+        git push origin HEAD:master
