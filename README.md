@@ -6,9 +6,11 @@
     * alt_id: 別名の作家ID
     * alt_name: 別名の作家名
 
-* work.json (作家情報と作品リスト)
+* person_detail.json (作家情報+作品リスト)
     * id: 作家ID
     * name: 作家名(姓 名)
+    * alt_id: 別名の作家ID
+    * alt_name: 別名の作家名
     * name_kana: 作家名読み
     * name_en: 作家名ローマ字表記
     * born_on: 生年月日
