@@ -96,7 +96,9 @@ def gen_work_list
             end
           end
         end
-        work[num][:work].sort!{|a,b| a[:work_id] <=> b[:work_id] }
+        if work[num][:work]
+          work[num][:work].sort!{|a,b| a[:work_id] <=> b[:work_id] }
+        end
       end
     rescue ArgumentError => e # encoding error
       ##  STDERR.print d, ": ", e.class, "\n"
