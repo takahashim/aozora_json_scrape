@@ -12,7 +12,7 @@ require 'json'
 ATTRS = {title: "作品名", title_kana: "作品名読み", subtitle: "副題", subtitle_kana: "副題読み",
          title_en: "原題", person_name: "著者名",
          collection:"作品集名", collection_kana:"作品集名読み",
-         cat: "分類", work_detail: "作品について", kana_type: "文字遣い種別", detail: "備考",
+         cat: "分類", work_detail: "作品について", kana_type: "文字遣い種別", note: "備考",
          first_appearance: "初出",kana_type2:"仮名遣い種別",
          author_name: "作家名", author_kana: "作家名読み",
          input: "入力", proofread: "校正",
@@ -39,7 +39,7 @@ def parse_table(doc, summary)
                 @attr = ATTRS_R[value]
               end
             else
-              if [:author_detail, :detail, :work_detail].member?(@attr)
+              if [:author_detail, :note, :work_detail].member?(@attr)
                 data[@attr] = child.children.to_s.strip
               else
                 data[@attr] = child.text.strip
