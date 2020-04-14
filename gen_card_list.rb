@@ -15,12 +15,17 @@ ATTRS = {title: "作品名", title_kana: "作品名読み", subtitle: "副題", 
          cat: "分類", work_detail: "作品について", kana_type: "文字遣い種別", note: "備考",
          first_appearance: "初出",kana_type2:"仮名遣い種別",
          author_name: "作家名", author_kana: "作家名読み",
+         original_book: "底本", publisher: "出版社", first_published_on: "初版発行日",
+         input_edition: "入力に使用", proof_edition: "校正に使用",
+         base_book: "底本の親本",
          input: "入力", proofread: "校正",
          author_en: "ローマ字表記", born_on: "生年", died_on: "没年", author_detail: "人物について",
          site_name: "サイト名", url: "URL"}
 ATTRS_R = ATTRS.invert
 
-SUMMARYS = {title: "タイトルデータ", work: "作品データ", author: "作家データ", worker: "工作員データ", site: "関連サイトデータ"}
+SUMMARYS = {title: "タイトルデータ", work: "作品データ", author: "作家データ",
+            original_book: "底本データ", base_book: "親本データ",
+            worker: "工作員データ", site: "関連サイトデータ"}
 def parse_table(doc, summary)
   list = []
   smr = SUMMARYS[summary]
@@ -101,6 +106,8 @@ def parse_card(path)
   card[:work] = parse_table(doc, :work)[0]
   card[:author] = parse_table(doc, :author)
   card[:woker] = parse_table(doc, :worker)[0]
+  card[:original_book] = parse_table(doc, :original_book)
+  card[:base_book] = parse_table(doc, :base_book)
   card[:download] = parse_download(doc)
   card[:site] = parse_table(doc, :site)
 
