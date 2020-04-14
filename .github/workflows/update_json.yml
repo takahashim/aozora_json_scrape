@@ -2,7 +2,7 @@ name: Update JSON files
 
 on:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '0 * * * *'
 
 jobs:
   build:
@@ -19,18 +19,22 @@ jobs:
     - name: checkout aozorabuno.git
       run: |
         git clone --depth 1 https://github.com/aozorabunko/aozorabunko.git
+    - name: use bunlder
+      run: |
+        cp Gemfile aozorabunko/
+        cd aozorabunko && bundle install
     - name: generate person.json
       run: |
-        cd aozorabunko && ruby ../gen_person_list.rb > ../person.json
+        cd aozorabunko && bundle exec ruby ../gen_person_list.rb > ../person.json
     - name: generate person_detail.json
       run: |
-        cd aozorabunko && ruby ../gen_person_detail_list.rb > ../person_detail.json
+        cd aozorabunko && bundle exec ruby ../gen_person_detail_list.rb > ../person_detail.json
     - name: generate person_input_detail.json
       run: |
-        cd aozorabunko && ruby ../gen_person_input_detail.rb > ../person_input_detail.json
+        cd aozorabunko && bundle exec ruby ../gen_person_input_detail.rb > ../person_input_detail.json
     - name: generate card.json
       run: |
-        cd aozorabunko && ruby ../gen_card_list.rb > ../card.json
+        cd aozorabunko && bundle exec ruby ../gen_card_list.rb > ../card.json
     - name: git config && commit
       run: |
         git config --global user.email "takahashim@users.noreply.github.com"
