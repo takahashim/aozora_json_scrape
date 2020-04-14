@@ -111,7 +111,7 @@ def parse_all_cards
   cards = []
 
   i = 0
-  Dir.glob("cards/*/card*.html") do |d|
+  Dir.glob("cards/*/card*.html").sort.each do |d|
     begin
       d =~ %r|cards/(\d+)/card(\d+)\.html|
       person_num = $1.to_i
