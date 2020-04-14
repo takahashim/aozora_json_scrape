@@ -26,18 +26,23 @@ ATTRS_R = ATTRS.invert
 SUMMARYS = {title: "タイトルデータ", work: "作品データ", author: "作家データ",
             original_book: "底本データ", base_book: "親本データ",
             worker: "工作員データ", site: "関連サイトデータ"}
+
+def parse_num_from_person_path(str)
+  str =~ /person(\d+)\.html/
+  $1.to_i
+end
+
 def parse_table(doc, summary)
-  list = []
   smr = SUMMARYS[summary]
   tables = doc.css("table[summary=\"#{smr}\"]")
-  tables.each do |t|
+  list = tables.map do |t|
     data = {}
     t.children.each do |node|
       if node.class == Nokogiri::XML::Element
         node.children.each do |child|
           if child.name == "td"
             if child["class"] == "header"
-              value = child.text.strip.sub(/：$/,"")
+              value = child.text.strip.sub(/：$/, "")
               if summary == :author && value == "分類"
                 @attr = :role
               else
@@ -52,16 +57,16 @@ def parse_table(doc, summary)
 
               if [:author_name, :person_name].member?(@attr)
                 url = child.css("a").attribute("href").value
-                url =~ /person(\d+)\.html/
-                data[:author_num] = $1.to_i
+                data[:author_num] = parse_num_from_person_path(url)
               end
             end
           end
         end
       end
     end
-    list << data
+    data
   end
+
   list
 end
 
@@ -69,13 +74,11 @@ def parse_download(doc)
   table = doc.css("table[summary=\"ダウンロードデータ\"]")
   data = []
   table.children.each do |node|
-    next if node.class == Nokogiri::XML::Text
     if node.class == Nokogiri::XML::Element
       elem = []
-      node.children.each_with_index do |child, idx|
+      node.children.each do |child|
         if child.name == "td"
-          value = child.text.strip
-          elem << value
+          elem << child.text.strip
         end
       end
       if elem.size > 0
@@ -101,17 +104,16 @@ def parse_card(path)
   end
   doc = Nokogiri::HTML(content)
 
-  card = {}
-  card[:title] = parse_table(doc, :title)[0]
-  card[:work] = parse_table(doc, :work)[0]
-  card[:author] = parse_table(doc, :author)
-  card[:woker] = parse_table(doc, :worker)[0]
-  card[:original_book] = parse_table(doc, :original_book)
-  card[:base_book] = parse_table(doc, :base_book)
-  card[:download] = parse_download(doc)
-  card[:site] = parse_table(doc, :site)
-
-  card
+  {
+    title: parse_table(doc, :title)[0],
+    work: parse_table(doc, :work)[0],
+    author: parse_table(doc, :author),
+    woker: parse_table(doc, :worker)[0],
+    original_book: parse_table(doc, :original_book),
+    base_book: parse_table(doc, :base_book),
+    download: parse_download(doc),
+    site: parse_table(doc, :site)
+  }
 end
 
 def parse_all_cards
