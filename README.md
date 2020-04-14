@@ -1,3 +1,5 @@
+![Update JSON files](https://github.com/takahashim/aozora_json_scrape/workflows/Update%20JSON%20files/badge.svg)
+
 青空文庫の作家リストJSONと作品リストJSONを、青空文庫公開サイトとgithubリポジトリから生成するスクリプトと生成結果のJSONファイルです。
 
 * person.json (作家リスト)
