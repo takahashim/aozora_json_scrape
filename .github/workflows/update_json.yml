@@ -28,6 +28,9 @@ jobs:
     - name: generate person_input_detail.json
       run: |
         cd aozorabunko && ruby ../gen_person_input_detail.rb > ../person_input_detail.json
+    - name: generate card.json
+      run: |
+        cd aozorabunko && ruby ../gen_card_list.rb > ../card.json
     - name: git config && commit
       run: |
         git config --global user.email "takahashim@users.noreply.github.com"
