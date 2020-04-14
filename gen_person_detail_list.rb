@@ -76,6 +76,8 @@ def gen_work_list
             work[num] ||= {id: num, work: []}
             work[num][:work] ||= []
             work[num][:work] << {work_id: work_id, title: title}
+          elsif line =~ %r{<div class="copyright">}
+            work[num][:copyright] = true
           elsif line =~ %r{<tr><td class="header">(.+?)：</td><td>(.+?)</td>}
             header, body = $1, $2
             if PERSON_HEADERS.values.include?(header)
