@@ -82,9 +82,12 @@ def gen_work_list
               new_work[:kana_type] = kana_type
             end
 
-            if line =~ %r{→<a href="person(\d+)\.html">(.+)</a>\((.+)\)}
-              alt_id, alt_name, role = $1.to_i, $2, $3
-              new_work.merge!({alt_id: alt_id, alt_name: alt_name, role: role})
+            author_line = line.dup
+            while author_line =~ %r{→<a href="person(\d+)\.html">(.+?)</a>\((.+?)\)}
+              person_id, person_name, role = $1.to_i, $2, $3
+              new_work["others"] ||= []
+              new_work["others"] << {person_id: person_id, person_name: person_name, role: role}
+              author_line = $'
             end
             work[num][:work] << new_work
           elsif line =~ %r{<div class="copyright">}
