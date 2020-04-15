@@ -73,11 +73,16 @@ def gen_work_list
             work_id, title = $1.to_i, $2
             work[num] ||= {id: num, work: []}
             work[num][:work] ||= []
-            work[num][:work] << {work_id: work_id, title: title}
+            new_work = {work_id: work_id, title: title}
+            if line =~ %r{　（(.+)、作品ID：(\d+)）}
+              new_work[:kana_type] = $1
+            end
 
-            line =~ %r{→<a href="person(\d+)\.html">(.+)</a>\((.+)\)}
-            alt_num, alt_name, role = $1.to_i, $2, $3
-            work[num][:work].merge!({alt_id: alt_num, alt_name: alt_name, role: role})
+            if line =~ %r{→<a href="person(\d+)\.html">(.+)</a>\((.+)\)}
+              alt_id, alt_name, role = $1.to_i, $2, $3
+              new_work.merge!({alt_id: alt_id, alt_name: alt_name, role: role})
+            end
+            work[num][:work] << new_work
           elsif line =~ %r{<div class="copyright">}
             work[num][:copyright] = true
           elsif line =~ %r{<tr><td class="header">(.+?)：</td><td>(.+?)</td>}
