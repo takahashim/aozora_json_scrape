@@ -140,6 +140,11 @@ def merge_original_book(card)
   card.delete(:base_book)
 end
 
+def parse_copyright(doc)
+  div = doc.css("div.copyright")
+  div.size > 0
+end
+
 def parse_card(path)
   content = read_content(path)
   doc = Nokogiri::HTML(content)
@@ -152,7 +157,8 @@ def parse_card(path)
     original_book: parse_table(doc, :original_book),
     base_book: parse_table(doc, :base_book),
     download: parse_download(doc),
-    site: parse_table(doc, :site)
+    site: parse_table(doc, :site),
+    copyright: parse_copyright(doc)
   }
   fix_kana_type(card)
   merge_original_book(card)
