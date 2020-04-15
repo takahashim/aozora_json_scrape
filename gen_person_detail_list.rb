@@ -68,13 +68,14 @@ def gen_work_list
 
         # format:
         # <li><a href="../cards/000005/card5.html">あいびき</a>　（新字新仮名、作品ID：5）　 　　 →<a href="person6.html">二葉亭 四迷</a>(翻訳者) </li>
+        # <li>カエルの王さま　または鉄のハインリッヒ（新字新仮名、作品ID：59498）　 →<a href="person1092.html">グリム ヴィルヘルム・カール</a>(著者) →<a href="person1891.html">矢崎 源九郎</a>(翻訳者) </li>
         content.each_line do |line|
           if line =~ %r{<a href="../cards/\d+/card(\d+)\.html">(.*?)</a>}
             work_id, title = $1.to_i, $2
             work[num] ||= {id: num, work: []}
             work[num][:work] ||= []
             new_work = {work_id: work_id, title: title}
-            if line =~ %r{　(.+)?（(.+)、作品ID：(\d+)）}
+            if line =~ %r{</a>　(.+)?（(.+)、作品ID：(\d+)）}
               subtitle, kana_type, work_id = $1, $2, $3.to_i
               if subtitle
                 new_work[:subtitle] = subtitle
@@ -110,10 +111,23 @@ def gen_work_list
               work[num] ||= {id: num, work: []}
               work[num][key] = body
             end
+          elsif line =~ %r{<li>(.+?)　(.*?)（(.+?)、作品ID：(\d+)）　}
+            title, subtitle, kana_type, work_id = $1, $2, $3, $4.to_i
+            wip = {title: title, subtitle: subtitle, kana_type: kana_type, work_id: work_id}
+            author_line = line.dup
+            while author_line =~ %r{→<a href="person(\d+)\.html">(.+?)</a>\((.+?)\)}
+              person_id, person_name, role = $1.to_i, $2, $3
+              wip[:others] ||= []
+              wip[:others] << {person_id: person_id, person_name: person_name, role: role}
+              author_line = $'
+            end
+            work[num][:wip] ||= []
+            work[num][:wip] << wip
           end
         end
         if work[num][:work]
-          work[num][:work].sort!{|a,b| a[:work_id] <=> b[:work_id] }
+          ## よみがな順ソート？
+          ## work[num][:work].sort!{|a,b| a[:work_id] <=> b[:work_id] }
         end
       end
     rescue ArgumentError => e # encoding error
