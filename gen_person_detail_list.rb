@@ -74,8 +74,12 @@ def gen_work_list
             work[num] ||= {id: num, work: []}
             work[num][:work] ||= []
             new_work = {work_id: work_id, title: title}
-            if line =~ %r{　（(.+)、作品ID：(\d+)）}
-              new_work[:kana_type] = $1
+            if line =~ %r{　(.+)?（(.+)、作品ID：(\d+)）}
+              subtitle, kana_type, work_id = $1, $2, $3.to_i
+              if subtitle
+                new_work[:subtitle] = subtitle
+              end
+              new_work[:kana_type] = kana_type
             end
 
             if line =~ %r{→<a href="person(\d+)\.html">(.+)</a>\((.+)\)}
