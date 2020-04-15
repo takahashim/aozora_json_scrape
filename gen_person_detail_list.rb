@@ -24,13 +24,11 @@ def gen_person_array
       if line =~ %r|<li><a href="person(\d+).html">(.+?)</a>|
         person_num = $1.to_i
         person_name = $2
+        person[person_num] = {id: person_num,
+                              name: person_name}
         if line =~ %r|→<a href="person(\d+).html">(.+?)</a>|
           alt_num = $1.to_i
           alt_name = $2
-        end
-        person[person_num] = {id: person_num,
-                              name: person_name}
-        if alt_num
           person[person_num].merge!({alt_id: alt_num, alt_name: alt_name})
         end
       end
