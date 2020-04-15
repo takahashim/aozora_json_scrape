@@ -56,7 +56,7 @@
         * proofread: 校正
     * original_book: 底本
         * booktype: 底本種別(底本/底本の親本)
-        * original_book: 底本
+        * book_title: 書名
         * publisher: 出版社
         * first_edition: 初版発行日
         * input_edition: 入力に使用
