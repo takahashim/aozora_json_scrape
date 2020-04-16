@@ -153,7 +153,7 @@ def parse_card(path)
     title: parse_table(doc, :title)[0],
     work: parse_table(doc, :work)[0],
     author: parse_table(doc, :author),
-    woker: parse_table(doc, :worker)[0],
+    worker: parse_table(doc, :worker)[0],
     original_book: parse_table(doc, :original_book),
     base_book: parse_table(doc, :base_book),
     download: parse_download(doc),
