@@ -12,7 +12,7 @@ require 'json'
 ATTRS = {title: "作品名", title_kana: "作品名読み", subtitle: "副題", subtitle_kana: "副題読み",
          title_en: "原題", person_name: "著者名",
          collection: "作品集名", collection_kana: "作品集名読み",
-         class: "分類", work_note: "作品について", kana_type: "文字遣い種別", note: "備考",
+         bibclass: "分類", work_note: "作品について", kana_type: "文字遣い種別", note: "備考",
          first_appearance: "初出", kana_type2: "仮名遣い種別",
          author_name: "作家名", author_kana: "作家名読み",
          original_book: "底本", publisher: "出版社", first_edition: "初版発行日",
@@ -89,7 +89,7 @@ def parse_download(doc)
                  filename: elem[2],
                  charset: charset,
                  encoding: enc,
-                 size: elem[4].to_i,
+                 bytes: elem[4].to_i,
                  created_on: elem[5],
                  updated_on: elem[6]}
       end
