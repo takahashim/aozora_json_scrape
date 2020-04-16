@@ -70,11 +70,14 @@ def gen_work_list
         # <li><a href="../cards/000005/card5.html">あいびき</a>　（新字新仮名、作品ID：5）　 　　 →<a href="person6.html">二葉亭 四迷</a>(翻訳者) </li>
         # <li>カエルの王さま　または鉄のハインリッヒ（新字新仮名、作品ID：59498）　 →<a href="person1092.html">グリム ヴィルヘルム・カール</a>(著者) →<a href="person1891.html">矢崎 源九郎</a>(翻訳者) </li>
         content.each_line do |line|
-          if line =~ %r{<a href="../cards/\d+/card(\d+)\.html">(.*?)</a>}
-            work_id, title = $1.to_i, $2
+          if line =~ %r{<a href="../cards/(\d+)/card(\d+)\.html">(.*?)</a>}
+            card_person_id, work_id, title = $1.to_i, $2.to_i, $3
             work[num] ||= {id: num, work: []}
             work[num][:work] ||= []
             new_work = {work_id: work_id, title: title}
+            if card_person_id != num
+              new_work[:person_id] = card_person_id
+            end
             if line =~ %r{</a>　(.+)?（(.+)、作品ID：(\d+)）}
               subtitle, kana_type, work_id = $1, $2, $3.to_i
               if subtitle
