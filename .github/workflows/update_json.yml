@@ -2,7 +2,7 @@ name: Update JSON files
 
 on:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '*/10 * * * *'
 
 jobs:
   build:
@@ -35,6 +35,9 @@ jobs:
     - name: generate card.json
       run: |
         cd aozorabunko && bundle exec ruby ../gen_card_list.rb > ../card.json
+    - name: generate whatsnew*.json
+      run: |
+        bundle exec ruby gen_whatsnew.rb
     - name: git config && commit
       run: |
         git config --global user.email "takahashim@users.noreply.github.com"
