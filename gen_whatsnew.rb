@@ -42,12 +42,13 @@ def extract_aozora_csv(csv_file)
 end
 
 def save_whatsnew_json(works, year)
-  works_year = works_sorted.select{ |work| work[:published_on].start_with?(year) }
+  works_year = works.select{ |work| work[:published_on].start_with?(year) }
   File.write("whatsnew#{year}.json", JSON.dump(works_year)+"\n")
 end
 
 def make_sakuhin_list(csv_file)
   sakuhin_list = {}
+  works = {}
   CSV.foreach(csv_file, headers: true) do |row|
     work_id, title, subtitle, kana_type, published_on, card_url, f_name, l_name, role, input, proofread =
                                                                                    row[0], row[1], row[4], row[9], row[11], row[13], row[15], row[16], row[23], row[43], row[44]
@@ -83,8 +84,8 @@ works_sorted = make_works(csv_file)
 curr_year = works_sorted.first[:published_on].slice(0,4)
 prev_year = (curr_year.to_i - 1).to_s
 
-save_whatsnew_json(works, curr_year)
-save_whatsnew_json(works, prev_year)
+save_whatsnew_json(works_sorted, curr_year)
+save_whatsnew_json(works_sorted, prev_year)
 
 ## sakuhin
 sakuhin_sorted = make_sakuhin_list(csv_file)
