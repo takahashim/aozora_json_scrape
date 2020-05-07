@@ -18,7 +18,7 @@ jobs:
         ruby-version: 2.6.x
     - name: checkout aozorabuno.git
       run: |
-        git clone --depth 1 https://github.com/aozorabunko/aozorabunko.git
+        git clone https://github.com/aozorabunko/aozorabunko.git
     - name: use bunlder
       run: |
         cp Gemfile aozorabunko/
