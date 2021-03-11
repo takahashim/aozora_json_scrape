@@ -10,6 +10,7 @@
 
 require 'json'
 require 'open-uri'
+require "../util.rb"
 
 def gen_person_array
   url = "https://www.aozora.gr.jp/index_pages/person_all_all.html"
@@ -103,6 +104,9 @@ def gen_work_list
               if key == :name
                 body.gsub!(/<[^>]+>/,"")
                 body.gsub!(/　→.*$/,"")
+              elsif key == :name_kana
+                # かなから、目次用の頭文字を設定
+                work[num][:canonicalized_initial] = canonicalize_initial(body)
               end
               work[num] ||= {id: num, work: []}
               work[num][key] = body
