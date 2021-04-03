@@ -1,9 +1,9 @@
 #! /usr/bin/env ruby
 
-# gen_perspmon_detail_list.rb で生成されたJSON person_detail.json から、
-# ひらがな五十音の索引をつけたJSONを生成する
+# gen_card_list.rb で生成されたJSON card.json から、
+# 十進法分類別の作品IDリストを生成する
 #
-# Usage: ruby [this file] > indexed_person_detail.json
+# Usage: ruby [this file] > work_ids_by_bibclass.json
 
 require "json"
 require "../util.rb"
