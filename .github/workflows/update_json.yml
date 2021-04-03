@@ -37,7 +37,7 @@ jobs:
         cd aozorabunko && bundle exec ruby ../gen_card_list.rb > ../card.json
     - name: generate work_ids_by_bibclass.json
       run: |
-        cd aozorabunko && bundle exec ruby ../gen_work_ids_by_bibclass.rb > ../work_ids_by_bibclass.json
+        bundle exec ruby gen_work_ids_by_bibclass.rb > work_ids_by_bibclass.json
     - name: generate whatsnew*.json
       run: |
         bundle exec ruby gen_whatsnew.rb
