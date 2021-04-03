@@ -6,9 +6,9 @@
 # Usage: ruby [this file] > work_ids_by_bibclass.json
 
 require "json"
-require "../util.rb"
+require "./util.rb"
 
-INPUT_JSON_FILENAME='../card.json'
+INPUT_JSON_FILENAME='./card.json'
 
 def chunk_cards_by_bibclass
   output={}
