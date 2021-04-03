@@ -49,6 +49,6 @@ result = chunk_cards_by_bibclass
 result.each do |k,v|
   v.sort!
 end
-result.sort_by!{ |k, v| [k, v.size]}
+result = result.sort_by{ |k, v| [k, v.size]}
 
 puts JSON.generate(result)
