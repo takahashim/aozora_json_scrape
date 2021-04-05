@@ -6,7 +6,6 @@
 # Usage: ruby [this file] > work_ids_by_bibclass.json
 
 require "json"
-require "./util.rb"
 
 INPUT_JSON_FILENAME='./card.json'
 
@@ -51,4 +50,4 @@ result.each do |k,v|
 end
 result = result.sort_by{ |k, v| [k, v.size]}
 
-puts JSON.generate(result)
+puts JSON.generate(result.to_h)
