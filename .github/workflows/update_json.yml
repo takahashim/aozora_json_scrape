@@ -39,6 +39,7 @@ jobs:
       run: |
         bundle exec ruby gen_work_ids_by_bibclass.rb > index_work_ids_by_bibclass.json
         bundle exec ruby gen_work_ids_by_initial.rb > index_work_ids_by_initial.json
+        bundle exec ruby gen_index_person_ids_by_initial.rb > index_person_ids_by_initial.json
     - name: generate whatsnew*.json
       run: |
         bundle exec ruby gen_whatsnew.rb
