@@ -10,7 +10,7 @@
 
 require 'json'
 require 'open-uri'
-require "../util.rb"
+require_relative "util.rb"
 
 def gen_person_array
   url = "https://www.aozora.gr.jp/index_pages/person_all_all.html"
