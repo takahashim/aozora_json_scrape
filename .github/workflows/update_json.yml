@@ -21,7 +21,7 @@ jobs:
         git clone --depth 50 https://github.com/aozorabunko/aozorabunko.git
     - name: use bunlder
       run: |
-        cp Gemfile aozorabunko/
+        cp Gemfile Gemfile.lock aozorabunko/
         cd aozorabunko && bundle install
     - name: generate person.json
       run: |
