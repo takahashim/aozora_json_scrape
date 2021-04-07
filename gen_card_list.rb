@@ -8,6 +8,7 @@
 
 require 'nokogiri'
 require 'json'
+require_relative "util.rb"
 
 ATTRS = {title: "作品名", title_kana: "作品名読み", subtitle: "副題", subtitle_kana: "副題読み",
          title_en: "原題", person_name: "著者名",
@@ -59,6 +60,8 @@ def parse_table(doc, summary)
               if [:author_name, :person_name].member?(attr)
                 url = child.css("a").attribute("href").value
                 data[:author_id] = parse_num_from_person_path(url)
+              elsif attr == :title_kana
+                data[:canonicalized_initial] = canonicalize_initial(data[attr])
               end
             end
           end
