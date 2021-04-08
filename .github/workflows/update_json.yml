@@ -22,7 +22,7 @@ jobs:
     - name: use bunlder
       run: |
         cp Gemfile Gemfile.lock aozorabunko/
-        cd aozorabunko && bundle install
+        cd aozorabunko && bundle update --bundler && bundle install
     - name: generate person.json
       run: |
         cd aozorabunko && bundle exec ruby ../gen_person_list.rb > ../person.json
