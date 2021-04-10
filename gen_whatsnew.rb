@@ -32,7 +32,7 @@ def extract_aozora_csv(csv_file)
   url = "https://www.aozora.gr.jp/index_pages/list_person_all_extended_utf8.zip"
   zip_file = "list_person_all_extended_utf8.zip"
 
-  content = open(url).read
+  content = URI.open(url).read
   File.write(zip_file, content)
 
   Zip::File.open(zip_file) do |zip_file|

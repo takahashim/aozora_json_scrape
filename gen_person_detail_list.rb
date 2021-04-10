@@ -15,7 +15,7 @@ require_relative "util.rb"
 def gen_person_array
   url = "https://www.aozora.gr.jp/index_pages/person_all_all.html"
   person = []
-  open(url) do |f|
+  URI.open(url) do |f|
     content = f.read()
     content.each_line do |line|
       line.force_encoding("UTF-8")
