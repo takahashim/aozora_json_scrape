@@ -2,7 +2,7 @@ name: Update JSON files
 
 on:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '0 2 * * *'
 
 jobs:
   build:
@@ -12,10 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
+    - name: Set up Ruby 3.0
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.6.x
+        ruby-version: '3.0'
     - name: checkout aozorabuno.git
       run: |
         git clone --depth 50 https://github.com/aozorabunko/aozorabunko.git
