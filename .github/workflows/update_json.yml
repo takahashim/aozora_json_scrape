@@ -12,17 +12,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
+    - name: Set up Ruby 3.0
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.6.x
+        ruby-version: '3.0'
     - name: checkout aozorabuno.git
       run: |
         git clone --depth 50 https://github.com/aozorabunko/aozorabunko.git
     - name: use bunlder
       run: |
-        cp Gemfile aozorabunko/
-        cd aozorabunko && bundle install
+        cp Gemfile Gemfile.lock aozorabunko/
+        cd aozorabunko && bundle update --bundler && bundle install
     - name: generate person.json
       run: |
         cd aozorabunko && bundle exec ruby ../gen_person_list.rb > ../person.json
@@ -37,8 +37,8 @@ jobs:
         cd aozorabunko && bundle exec ruby ../gen_card_list.rb > ../card.json
     - name: generate indices
       run: |
-        bundle exec ruby gen_work_ids_by_bibclass.rb > index_work_ids_by_bibclass.json
-        bundle exec ruby gen_work_ids_by_initial.rb > index_work_ids_by_initial.json
+        bundle exec ruby gen_index_work_ids_by_bibclass.rb > index_work_ids_by_bibclass.json
+        bundle exec ruby gen_index_work_ids_by_initial.rb > index_work_ids_by_initial.json
         bundle exec ruby gen_index_person_ids_by_initial.rb > index_person_ids_by_initial.json
     - name: generate whatsnew*.json
       run: |
