@@ -8,7 +8,7 @@
 
 require 'nokogiri'
 require 'json'
-require "../util.rb"
+require_relative "util.rb"
 
 ATTRS = {title: "作品名", title_kana: "作品名読み", subtitle: "副題", subtitle_kana: "副題読み",
          title_en: "原題", person_name: "著者名",
