@@ -3,8 +3,6 @@
 # gen_card_list.rb で生成されたJSON card.json から、
 # イニシャル別の作品リストを生成する
 #
-# Usage: ruby [this file] > index_work_ids_by_initial.json
-
 require "json"
 require_relative "util.rb"
 

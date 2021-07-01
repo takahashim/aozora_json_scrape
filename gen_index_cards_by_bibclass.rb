@@ -3,8 +3,6 @@
 # gen_card_list.rb で生成されたJSON card.json から、
 # 十進法分類別の作品リストを生成する
 #
-# Usage: ruby [this file] > work_ids_by_bibclass.json
-
 require "json"
 require_relative "util.rb"
 

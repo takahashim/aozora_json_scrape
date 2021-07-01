@@ -3,8 +3,6 @@
 # gen_person_detail_list.rb で生成されたJSON person_detail.json から、
 # イニシャル別の著者リストを生成する
 #
-# Usage: ruby [this file] > index_person_ids_by_initial.json
-
 require "json"
 require_relative "util.rb"
 
