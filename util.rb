@@ -6,6 +6,12 @@ CANONICALIZE_FROM = 'がぎぐげござじずぜぞだぢづでどばびぶべ�
 CANONICALIZE_TO   = 'かきくけこさしすせそたちつてとはひふへほはひふへほうあいうえおやゆよあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんかきくけこさしすせそたちつてとはひふへほはひふへほうあいうえおやゆよABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 def canonicalize_initial str
   return nil if str.nil? || str.empty?
-  s = str.gsub(/[「」『』（）〔〕【】〈〉［］“”‘’\(\)\{\}\[\]・＠＃＄％＊！？＋＝@#$%\*\!\?\+=]/, "")
-  s[0].tr(CANONICALIZE_FROM, CANONICALIZE_TO)
+  canonicalize_to_kana(str)[0]
+end
+
+def canonicalize_to_kana str
+  return nil if str.nil?
+  str
+    .gsub(/[「」『』（）〔〕【】〈〉［］“”‘’\(\)\{\}\[\]・＠＃＄％＊！？＋＝@#$%\*\!\?\+=]/, "")
+    .tr(CANONICALIZE_FROM, CANONICALIZE_TO)
 end
